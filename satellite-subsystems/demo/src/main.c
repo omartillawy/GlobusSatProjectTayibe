@@ -138,6 +138,7 @@ void taskMain()
 
 int main()
 {
+	int x;
 	unsigned int i;
 	xTaskHandle taskMainHandle;
 
