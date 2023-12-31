@@ -445,6 +445,8 @@ static Boolean selectAndExecuteTRXVUDemoTest(void)
 	printf("\t 10) (revD) Get command frame by interrupt \n\r");
 	printf("\t 11) (revD) Get receiver telemetry \n\r");
 	printf("\t 12) (revD) Get transmitter telemetry \n\r");
+	printf("\t 13) Test 5 \n\r");
+	printf("\t 14) Test 1 \n\r");
 	printf("\t 13) Return to main menu \n\r");
 
 	while(UTIL_DbguGetIntegerMinMax(&selection, 1, 13) == 0);
@@ -488,6 +490,12 @@ static Boolean selectAndExecuteTRXVUDemoTest(void)
 		break;
 	case 13:
 		offerMoreTests = FALSE;
+		break;
+	case 14:
+		vutc_sendInputTest(); // test 5
+		break;
+	case 14:
+		vutc_sendPacketFewTimesTest(); // test 1
 		break;
 
 	default:
@@ -578,3 +586,87 @@ Boolean TRXVUtest(void)
 	IsisTRXVUdemoMain();
 	return TRUE;
 }
+void turnOnTransponder(void){
+
+
+	unsigned char command[] = {56,2};
+	I2C_write(0x61,command,2);
+}
+ void turnOffTransponder(void){
+
+
+	unsigned char command[] = {56,1};
+	I2C_write(0x61,command,2);
+}
+ static Boolean vutc_sendInputTest(void)
+ {
+ 	//Buffers and variables definition
+ 	unsigned char testBuffer1[10]  = {0};
+ 	unsigned char txCounter = 0;
+ 	unsigned char avalFrames = 0;
+ 	unsigned int timeoutCounter = 0;
+
+ 	unsigned int temp;
+ 	int i;
+ 	for(i = 0;i<10;i++){
+ 		if(UTIL_DbguGetHexa32(&temp)){
+ 			testBuffer1[i] = (unsigned char)temp;
+ 		}else{
+ 			printf("\r\n Invalid Input . Please Enter a valid hexadecimal number .\n");
+ 			i--;
+ 		}
+ 	}
+
+ 	while(txCounter < 5 && timeoutCounter < 5)
+ 	{
+ 		printf("\r\n Transmission of single buffers with default callsign. AX25 Format. \r\n");
+ 		print_error(IsisTrxvu_tcSendAX25DefClSign(0, testBuffer1, 10, &avalFrames));
+
+ 		if ((avalFrames != 0)&&(avalFrames != 255))
+ 		{
+ 			printf("\r\n Number of frames in the buffer: %d  \r\n", avalFrames);
+ 			txCounter++;
+ 		}
+ 		else
+ 		{
+ 			vTaskDelay(100 / portTICK_RATE_MS);
+ 			timeoutCounter++;
+ 		}
+ 	}
+
+ 	return TRUE;
+ }
+
+ static Boolean vutc_sendPacketFewTimesTest(void)
+  {
+  	//Buffers and variables definition
+  	unsigned char testBuffer1[10]  = {0x31,0x32,0x33,0x34,0x35,0x36,0x37,0x38,0x39,0x40};
+  	unsigned char txCounter = 0;
+  	unsigned char avalFrames = 0;
+  	unsigned int timeoutCounter = 0;
+
+  	unsigned char times;
+
+  	UTIL_DbguGetInteger(&times);
+
+  	while(txCounter < times && timeoutCounter < 5)
+  	{
+  		printf("\r\n Transmission of single buffers with default callsign. AX25 Format. \r\n");
+  		print_error(IsisTrxvu_tcSendAX25DefClSign(0, testBuffer1, 10, &avalFrames));
+
+  		if ((avalFrames != 0)&&(avalFrames != 255))
+  		{
+  			printf("\r\n Number of frames in the buffer: %d  \r\n", avalFrames);
+  			txCounter++;
+  		}
+  		else
+  		{
+  			vTaskDelay(100 / portTICK_RATE_MS);
+  			timeoutCounter++;
+  		}
+  	}
+
+  	return TRUE;
+  }
+
+

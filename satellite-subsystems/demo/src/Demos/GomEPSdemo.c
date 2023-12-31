@@ -482,3 +482,40 @@ Boolean GomEPStest(void)
 	GomEPSdemoMain();
 	return TRUE;
 }
+double prev_volt = -1;
+ void Show_Operation_Modes(void){
+
+	    gom_eps_hk_t response;
+
+		print_error(GomEpsGetHkData_general(0,&response));
+
+
+
+		double Current_volt = response.fields.vbatt / 1000;
+		if(prev_volt == -1){
+			prev_volt = Current_volt;
+			return;
+		}
+
+
+		if(Current_volt - prev_volt > 0) {
+			if(Current_volt >= 7.5)
+				printf("\t Full");
+			else if(Current_volt < 7.5 && Current_volt >= 7.3 )
+				printf("\t Normal");
+			else
+				printf("Safe");
+
+		}else{
+			if(Current_volt > 7.2 && Current_volt <= 7.4)
+				printf("Normal");
+			else if(Current_volt > 6.5 && Current_volt <= 7.2)
+				printf("Safe");
+			else
+				printf("Critical");
+		}
+
+		prev_volt = Current_volt;
+
+
+}
