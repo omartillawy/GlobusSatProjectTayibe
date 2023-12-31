@@ -328,6 +328,8 @@ void show_TRXVU_Telemetry(){
 	vurc_getRxTelemTest_revD();
 	vutc_getTxTelemTest_revD();
 }
+
+//test 3
 void Show_Telemetry(){
 	show_SP_Telemetry();
 	show_Ant_Telemetry();

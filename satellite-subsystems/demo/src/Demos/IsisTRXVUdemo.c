@@ -586,18 +586,24 @@ Boolean TRXVUtest(void)
 	IsisTRXVUdemoMain();
 	return TRUE;
 }
+
+// test 2
 void turnOnTransponder(void){
 
 
 	unsigned char command[] = {56,2};
 	I2C_write(0x61,command,2);
 }
+
+// test 2
  void turnOffTransponder(void){
 
 
 	unsigned char command[] = {56,1};
 	I2C_write(0x61,command,2);
 }
+
+ // test 5
  static Boolean vutc_sendInputTest(void)
  {
  	//Buffers and variables definition
@@ -637,6 +643,7 @@ void turnOnTransponder(void){
  	return TRUE;
  }
 
+ //Test 1
  static Boolean vutc_sendPacketFewTimesTest(void)
   {
   	//Buffers and variables definition

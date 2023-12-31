@@ -482,6 +482,8 @@ Boolean GomEPStest(void)
 	GomEPSdemoMain();
 	return TRUE;
 }
+
+// test 4
 double prev_volt = -1;
  void Show_Operation_Modes(void){
 
