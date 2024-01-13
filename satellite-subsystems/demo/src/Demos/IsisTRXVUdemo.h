@@ -44,5 +44,8 @@ void IsisTRXVUdemoLoop(void);
  * Use IsisTRXVUdemoMain instead.
  */
 Boolean TRXVUtest(void);
-
+static Boolean vutc_sendInputTest(void);
+static Boolean vutc_sendPacketFewTimesTest(void);
+ Boolean vurc_getRxTelemTest_revD(void);
+ Boolean vurc_getTxTelemTest_revD(void);
 #endif /* ISISTRXVUDEMO_H_ */

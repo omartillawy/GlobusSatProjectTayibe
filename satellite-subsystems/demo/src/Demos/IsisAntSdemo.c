@@ -404,3 +404,24 @@ Boolean AntStest(void)
 	return TRUE;
 }
 
+void show_Ant_Telemetry(){
+	unsigned char antennaSystemsIndex = 0;
+		ISISantsTelemetry allTelem;
+		float eng_value = 0;
+		int sides[] = {isisants_sideA, isisants_sideB};
+        int k;
+		printf("\r\nAntS ");
+		for (k = 0; k < 2; k++){
+		print_error(IsisAntS_getAlltelemetry(antennaSystemsIndex, sides[k], &allTelem));
+
+		printf("Current deployment status 0x%x 0x%x (raw value) \r\n", allTelem.fields.ants_deployment.raw[0], allTelem.fields.ants_deployment.raw[1]);
+		printDeploymentStatus(1, allTelem.fields.ants_deployment.fields.ant1Undeployed);
+		printDeploymentStatus(2, allTelem.fields.ants_deployment.fields.ant2Undeployed);
+		printDeploymentStatus(3, allTelem.fields.ants_deployment.fields.ant3Undeployed);
+		printDeploymentStatus(4, allTelem.fields.ants_deployment.fields.ant4Undeployed);
+
+		eng_value = ((float)allTelem.fields.ants_temperature * -0.2922) + 190.65;
+		printf("\r\n AntS temperature %f deg. C\r\n", eng_value);
+		printf("\r\n AntS uptime %d sec. \r\n", allTelem.fields.ants_uptime);
+		}
+}

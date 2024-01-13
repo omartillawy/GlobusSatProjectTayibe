@@ -521,3 +521,86 @@ double prev_volt = -1;
 
 
 }
+ void show_GoM_EPS_Telemetry(){
+ 	gom_eps_hk_t myEpsTelemetry_hk;
+
+ 		printf("\r\nEPS Telemetry HK General \r\n\n");
+ 		print_error(GomEpsGetHkData_general(0, &myEpsTelemetry_hk));
+
+ 		printf("Voltage of boost converters PV1 = %d mV\r\n", myEpsTelemetry_hk.fields.vboost[0]);
+ 		printf("Voltage of boost converters PV2 = %d mV\r\n", myEpsTelemetry_hk.fields.vboost[1]);
+ 		printf("Voltage of boost converters PV3 = %d mV\r\n", myEpsTelemetry_hk.fields.vboost[2]);
+
+ 		printf("Voltage of the battery = %d mV\r\n", myEpsTelemetry_hk.fields.vbatt);
+
+ 		printf("Current inputs current 1 = %d mA\r\n", myEpsTelemetry_hk.fields.curin[0]);
+ 		printf("Current inputs current 2 = %d mA\r\n", myEpsTelemetry_hk.fields.curin[1]);
+ 		printf("Current inputs current 3 = %d mA\r\n", myEpsTelemetry_hk.fields.curin[2]);
+
+ 		printf("Current from boost converters = %d mA\r\n", myEpsTelemetry_hk.fields.cursun);
+ 		printf("Current out of the battery = %d mA\r\n", myEpsTelemetry_hk.fields.cursys);
+
+ 		printf("Current outputs current 1 = %d mA\r\n", myEpsTelemetry_hk.fields.curout[0]);
+ 		printf("Current outputs current 2 = %d mA\r\n", myEpsTelemetry_hk.fields.curout[1]);
+ 		printf("Current outputs current 3 = %d mA\r\n", myEpsTelemetry_hk.fields.curout[2]);
+ 		printf("Current outputs current 4 = %d mA\r\n", myEpsTelemetry_hk.fields.curout[3]);
+ 		printf("Current outputs current 5 = %d mA\r\n", myEpsTelemetry_hk.fields.curout[4]);
+ 		printf("Current outputs current 6 = %d mA\r\n", myEpsTelemetry_hk.fields.curout[5]);
+
+ 		printf("Output Status 1 = %d \r\n", myEpsTelemetry_hk.fields.output[0]);
+ 		printf("Output Status 2 = %d \r\n", myEpsTelemetry_hk.fields.output[1]);
+ 		printf("Output Status 3 = %d \r\n", myEpsTelemetry_hk.fields.output[2]);
+ 		printf("Output Status 4 = %d \r\n", myEpsTelemetry_hk.fields.output[3]);
+ 		printf("Output Status 5 = %d \r\n", myEpsTelemetry_hk.fields.output[4]);
+ 		printf("Output Status 6 = %d \r\n", myEpsTelemetry_hk.fields.output[5]);
+ 		printf("Output Status 7 = %d \r\n", myEpsTelemetry_hk.fields.output[6]);
+ 		printf("Output Status 8 = %d \r\n", myEpsTelemetry_hk.fields.output[7]);
+
+ 		printf("Output Time until Power is on 1 = %d \r\n", myEpsTelemetry_hk.fields.output_on_delta[0]);
+ 		printf("Output Time until Power is on 2 = %d \r\n", myEpsTelemetry_hk.fields.output_on_delta[1]);
+ 		printf("Output Time until Power is on 3 = %d \r\n", myEpsTelemetry_hk.fields.output_on_delta[2]);
+ 		printf("Output Time until Power is on 4 = %d \r\n", myEpsTelemetry_hk.fields.output_on_delta[3]);
+ 		printf("Output Time until Power is on 5 = %d \r\n", myEpsTelemetry_hk.fields.output_on_delta[4]);
+ 		printf("Output Time until Power is on 6 = %d \r\n", myEpsTelemetry_hk.fields.output_on_delta[5]);
+ 		printf("Output Time until Power is on 7 = %d \r\n", myEpsTelemetry_hk.fields.output_on_delta[6]);
+ 		printf("Output Time until Power is on 8 = %d \r\n", myEpsTelemetry_hk.fields.output_on_delta[7]);
+
+ 		printf("Output Time until Power is off 1 = %d \r\n", myEpsTelemetry_hk.fields.output_off_delta[0]);
+ 		printf("Output Time until Power is off 2 = %d \r\n", myEpsTelemetry_hk.fields.output_off_delta[1]);
+ 		printf("Output Time until Power is off 3 = %d \r\n", myEpsTelemetry_hk.fields.output_off_delta[2]);
+ 		printf("Output Time until Power is off 4 = %d \r\n", myEpsTelemetry_hk.fields.output_off_delta[3]);
+ 		printf("Output Time until Power is off 5 = %d \r\n", myEpsTelemetry_hk.fields.output_off_delta[4]);
+ 		printf("Output Time until Power is off 6 = %d \r\n", myEpsTelemetry_hk.fields.output_off_delta[5]);
+ 		printf("Output Time until Power is off 7 = %d \r\n", myEpsTelemetry_hk.fields.output_off_delta[6]);
+ 		printf("Output Time until Power is off 8 = %d \r\n", myEpsTelemetry_hk.fields.output_off_delta[7]);
+
+ 		printf("Number of latch-ups 1 = %d \r\n", myEpsTelemetry_hk.fields.latchup[0]);
+ 		printf("Number of latch-ups 2 = %d \r\n", myEpsTelemetry_hk.fields.latchup[1]);
+ 		printf("Number of latch-ups 3 = %d \r\n", myEpsTelemetry_hk.fields.latchup[2]);
+ 		printf("Number of latch-ups 4 = %d \r\n", myEpsTelemetry_hk.fields.latchup[3]);
+ 		printf("Number of latch-ups 5 = %d \r\n", myEpsTelemetry_hk.fields.latchup[4]);
+ 		printf("Number of latch-ups 6 = %d \r\n", myEpsTelemetry_hk.fields.latchup[5]);
+
+ 		printf("Time left on I2C WDT = %d \r\n", myEpsTelemetry_hk.fields.wdt_i2c_time_left);
+ 		printf("Time left on WDT GND = %d \r\n", myEpsTelemetry_hk.fields. wdt_gnd_time_left);
+ 		printf("Time left on I2C WDT CSP ping 1 = %d \r\n", myEpsTelemetry_hk.fields.wdt_csp_pings_left[0]);
+ 		printf("Time left on I2C WDT CSP ping 2 = %d \r\n", myEpsTelemetry_hk.fields.wdt_csp_pings_left[1]);
+
+ 		printf("Number of I2C WD reboots = %d\r\n", myEpsTelemetry_hk.fields.counter_wdt_i2c);
+ 		printf("Number of WDT GND reboots = %d\r\n", myEpsTelemetry_hk.fields.counter_wdt_gnd);
+ 		printf("Number of WDT CSP ping 1 reboots = %d\r\n", myEpsTelemetry_hk.fields.counter_wdt_csp[0]);
+ 		printf("Number of WDT CSP ping 2 reboots = %d\r\n", myEpsTelemetry_hk.fields.counter_wdt_csp[0]);
+ 		printf("Number of EPS reboots = %d\r\n", myEpsTelemetry_hk.fields.counter_boot);
+
+ 		printf("Temperature sensors. TEMP1 = %d \r\n", myEpsTelemetry_hk.fields.temp[0]);
+ 		printf("Temperature sensors. TEMP2 = %d \r\n", myEpsTelemetry_hk.fields.temp[1]);
+ 		printf("Temperature sensors. TEMP3 = %d \r\n", myEpsTelemetry_hk.fields.temp[2]);
+ 		printf("Temperature sensors. TEMP4 = %d \r\n", myEpsTelemetry_hk.fields.temp[3]);
+ 		printf("Temperature sensors. BATT0 = %d \r\n", myEpsTelemetry_hk.fields.temp[4]);
+ 		printf("Temperature sensors. BATT1 = %d \r\n", myEpsTelemetry_hk.fields.temp[5]);
+
+ 		printf("Cause of last EPS reset = %d\r\n", myEpsTelemetry_hk.fields.bootcause);
+ 		printf("Battery Mode = %d\r\n", myEpsTelemetry_hk.fields.battmode);
+ 		printf("PPT tracker Mode = %d\r\n", myEpsTelemetry_hk.fields.pptmode);
+ 		printf(" \r\n");
+ }

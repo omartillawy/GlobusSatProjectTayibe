@@ -25,6 +25,7 @@
 #include <hal/errors.h>
 
 #include <satellite-subsystems/IsisTRXVU.h>
+#include "C:\ISIS\workspace\GlobusSatProjectTayibe\satellite-subsystems\demo\src\Demos\IsisTRXVUdemo.h"
 
 #include <stddef.h>
 #include <stdlib.h>
@@ -317,7 +318,7 @@ static Boolean vurc_getFrameCmdInterruptTest(void)
     return TRUE;
 }
 
-static Boolean vurc_getRxTelemTest_revD(void)
+ Boolean vurc_getRxTelemTest_revD(void)
 {
 	unsigned short telemetryValue;
 	float eng_value = 0.0;
@@ -372,7 +373,7 @@ static Boolean vurc_getRxTelemTest_revD(void)
 	return TRUE;
 }
 
-static Boolean vutc_getTxTelemTest_revD(void)
+ Boolean vutc_getTxTelemTest_revD(void)
 {
 	unsigned short telemetryValue;
 	float eng_value = 0.0;
@@ -447,9 +448,11 @@ static Boolean selectAndExecuteTRXVUDemoTest(void)
 	printf("\t 12) (revD) Get transmitter telemetry \n\r");
 	printf("\t 13) Test 5 \n\r");
 	printf("\t 14) Test 1 \n\r");
-	printf("\t 13) Return to main menu \n\r");
+	printf("\t 15) Test 2 a \n\r");
+	printf("\t 16) Test 2 b \n\r");
+	printf("\t 17) Return to main menu \n\r");
 
-	while(UTIL_DbguGetIntegerMinMax(&selection, 1, 13) == 0);
+	while(UTIL_DbguGetIntegerMinMax(&selection, 1, 17) == 0);
 
 	switch(selection) {
 	case 1:
@@ -489,17 +492,20 @@ static Boolean selectAndExecuteTRXVUDemoTest(void)
 		offerMoreTests = vutc_getTxTelemTest_revD();
 		break;
 	case 13:
-		offerMoreTests = FALSE;
-		break;
-	case 14:
-		vutc_sendInputTest(); // test 5
+		offerMoreTests = vutc_sendInputTest(); // test 5
 		break;
 	case 14:
 		vutc_sendPacketFewTimesTest(); // test 1
 		break;
-
-	default:
+	case 15:
+		turnOnTransponder();
 		break;
+	case 16:
+		turnOffTransponder();
+		break;
+	case 17:
+		offerMoreTests = FALSE;
+
 	}
 
 	return offerMoreTests;
@@ -587,7 +593,7 @@ Boolean TRXVUtest(void)
 	return TRUE;
 }
 
-// test 2
+// test 2 a
 void turnOnTransponder(void){
 
 
@@ -595,7 +601,7 @@ void turnOnTransponder(void){
 	I2C_write(0x61,command,2);
 }
 
-// test 2
+// test 2 b
  void turnOffTransponder(void){
 
 
@@ -603,8 +609,12 @@ void turnOnTransponder(void){
 	I2C_write(0x61,command,2);
 }
 
+ static Boolean f(void)
+ {
+	 return TRUE;
+ }
  // test 5
- static Boolean vutc_sendInputTest(void)
+static Boolean vutc_sendInputTest(void)
  {
  	//Buffers and variables definition
  	unsigned char testBuffer1[10]  = {0};
@@ -652,7 +662,7 @@ void turnOnTransponder(void){
   	unsigned char avalFrames = 0;
   	unsigned int timeoutCounter = 0;
 
-  	unsigned char times;
+  	int times;
 
   	UTIL_DbguGetInteger(&times);
 

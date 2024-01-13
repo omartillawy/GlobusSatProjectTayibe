@@ -89,4 +89,3 @@ Boolean SolarPaneltest(void)
 
 	return TRUE;
 }
-

@@ -45,4 +45,6 @@ void GomEPSdemoLoop(void);
  */
 Boolean GomEPStest(void);
 
+void show_GoM_EPS_Telemetry();
+
 #endif /* ISISGOMEPSDEMO_H_ */

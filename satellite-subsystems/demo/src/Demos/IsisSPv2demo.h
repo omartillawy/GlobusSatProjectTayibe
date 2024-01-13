@@ -11,5 +11,6 @@
 #include <hal/boolean.h>
 
 Boolean SolarPanelv2test();
+Boolean SolarPanelv2_Temperature();
 
 #endif /* ISISSPTEST_H_ */
