@@ -24,5 +24,7 @@ void taskmain();
  */
 int main();
 
+void branch();
+
 #endif /* MAIN_H_ */
 
