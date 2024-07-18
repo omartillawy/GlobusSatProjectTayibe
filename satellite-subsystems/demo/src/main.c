@@ -41,7 +41,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "C:\ISIS\workspace\GlobusSatProjectTayibe\satellite-subsystems\demo\src\Demos\IsisTRXVUdemo.h"
 
 #define ENABLE_MAIN_TRACES 1
 #if ENABLE_MAIN_TRACES
@@ -210,3 +209,14 @@ void Show_Telemetry(){
 	show_GoM_EPS_Telemetry();
 	show_TRXVU_Telemetry();
 }
+
+
+
+
+
+
+int Start_SubSystem(){
+
+
+}
+

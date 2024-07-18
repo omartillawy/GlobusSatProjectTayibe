@@ -25,7 +25,7 @@
 #include <hal/errors.h>
 
 #include <satellite-subsystems/IsisTRXVU.h>
-#include "C:\ISIS\workspace\GlobusSatProjectTayibe\satellite-subsystems\demo\src\Demos\IsisTRXVUdemo.h"
+#//include "C:\ISIS\workspace\GlobusSatProjectTayibe\satellite-subsystems\demo\src\Demos\IsisTRXVUdemo.h"
 
 #include <stddef.h>
 #include <stdlib.h>

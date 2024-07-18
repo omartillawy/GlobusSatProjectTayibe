@@ -49,7 +49,7 @@ int StartTIME();
  * @return	0 successful init
  * 			-1 failed at init
  */
-int InitSubsystems();
+int Init_Subsystems();
 
 /*!
  * @brief	deployment procedure
@@ -57,5 +57,9 @@ int InitSubsystems();
  * 			-1 failed to deploy
  */
 int DeploySystem();
+
+int InitSystems();
+
+int Init_Drivers();
 
 #endif /* INITSYSTEM_H_ */
