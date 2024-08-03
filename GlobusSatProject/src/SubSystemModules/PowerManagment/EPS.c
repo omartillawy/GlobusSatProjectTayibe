@@ -21,7 +21,7 @@ int UpdateAlpha(sat_packet_t *);
 voltage_t prev_avg = 0;
 float alpha = 0;
 #ifdef Gom
-int EPS_Init(void)
+int EPS_Init(void) // GoM
 {
     unsigned char i2c_address = 0x02;
     int rv;
@@ -40,7 +40,7 @@ int EPS_Init(void)
 	return 0;
 }
 #else
-int EPS_Init(){
+int EPS_Init(){ // ISIS
 
 	IMEPSV2_PIU_t i2c_address;
 	i2c_address.i2cAddr = EPS_I2C_ADDR;
@@ -69,24 +69,24 @@ int EPS_Conditioning(){
          #else
 	        GetBatteryVoltage(&response1);
          #endif
-			voltage_t Current_volt = GetFilterVoltage(response1);
+			voltage_t Current_volt = GetFilterVoltage(response1); //mv
 
 			if(prev_avg == -1){
 				prev_avg = Current_volt;
 				return 0;
 			}
 			if(Current_volt - prev_avg > 0) {
-				if(Current_volt >= 7.5)
+				if(Current_volt >= 7400)
 					printf("\t Full");
-				else if(Current_volt < 7.5 && Current_volt >= 7.3 )
+				else if(Current_volt < 7400 && Current_volt >= 7200 )
 					printf("\t Normal");
 				else
 					printf("Safe");
 
 			}else{
-				if(Current_volt > 7.2 && Current_volt <= 7.4)
+				if(Current_volt > 7100 && Current_volt <= 7300)
 					printf("\t normal");
-				else if(Current_volt > 6.5 && Current_volt <= 7.2)
+				else if(Current_volt > 6500 && Current_volt <= 7100)
 					printf("\t Safe");
 				else
 					printf("\t Critical");
@@ -98,7 +98,7 @@ int EPS_Conditioning(){
 
 int UpdateAlpha(sat_packet_t *cmd){
 
-	int new_alpha = alpha;
+	float new_alpha = *(float*)cmd->data;
 	if(new_alpha < 0 || new_alpha >1)
 		return logError(-2, "UpdateAlpha");
 	int err= logError(FRAM_write((unsigned char*)&new_alpha , EPS_ALPHA_FILTER_VALUE_ADDR , EPS_ALPHA_FILTER_VALUE_SIZE) , "Error writeing to FRAM" );
@@ -108,15 +108,13 @@ int UpdateAlpha(sat_packet_t *cmd){
 }
 
 int GetBatteryVoltage(voltage_t * c){
-	imepsv2_piu__gethousekeepingeng__from_t response;
+	  imepsv2_piu__gethousekeepingeng__from_t response;
 
 		int error = imepsv2_piu__gethousekeepingeng(0,&response);
 		if( error )
 		{
 			if(logError(error , "imepsv2_piu__gethousekeepingeng(...)"))
-							return -1;
-						return 0;
-
+							return FALSE;
 		}
 		*c = response.fields.batt_input.fields.volt;
 
@@ -130,9 +128,7 @@ int Gom_GetBatteryVoltage(voltage_t * c){
 		if( error )
 		{
 			if(logError(error , "imepsv2_piu__gethousekeepingeng(...)"))
-							return -1;
-						return 0;
-
+							return FALSE;
 		}
 		*c = response.fields.vbatt;
 
@@ -143,12 +139,14 @@ int Gom_GetBatteryVoltage(voltage_t * c){
 
 int GetAlpha(float *alpha){
 	if(NULL == alpha)
-		return E_INPUT_POINTER_NULL;
-	if(logError(
-			FRAM_read((unsigned char*)&alpha , EPS_ALPHA_FILTER_VALUE_ADDR , EPS_ALPHA_FILTER_VALUE_SIZE), "Error, reading from FRAM"))
-		return -1;
-	return 0;
+			return E_INPUT_POINTER_NULL;
+		if(logError(
+				FRAM_read((unsigned char*)&alpha , EPS_ALPHA_FILTER_VALUE_ADDR , EPS_ALPHA_FILTER_VALUE_SIZE), "Error, reading from FRAM"))
+			return -1;
+		return 0;
 }
+
+
 
 
 

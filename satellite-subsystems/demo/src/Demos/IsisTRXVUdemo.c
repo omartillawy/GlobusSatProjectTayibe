@@ -46,6 +46,9 @@
 static xTaskHandle watchdogKickTaskHandle = NULL;
 static xSemaphoreHandle trxvuInterruptTrigger = NULL;
 
+static Boolean vutc_sendInputTest(void);
+static Boolean vutc_sendPacketFewTimesTest(void);
+
 // Test Function
 static Boolean softResetVUTest(void)
 {

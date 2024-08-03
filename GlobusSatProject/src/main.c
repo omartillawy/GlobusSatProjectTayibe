@@ -34,8 +34,7 @@
 
 void taskmain(){
 	WDT_startWatchdogKickTask(10 /portTICK_RATE_MS,FALSE);
-
-	InitSystems();
+   InitSystems();
 
 	while(TRUE){
 		EPS_Conditioning();
@@ -59,4 +58,5 @@ int main(){
 			xTaskGenericCreate(taskmain, (const signed char*) "taskMain", 4096, NULL,
 					configMAX_PRIORITIES - 2, &taskMainHandle, NULL, NULL);
 			vTaskStartScheduler();
+			exit(0);
 }

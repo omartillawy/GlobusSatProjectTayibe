@@ -65,51 +65,38 @@ int ParseDataToCommand(unsigned char * data, sat_packet_t *cmd){
 
 }
 
-//
-//typedef enum __attribute__ ((__packed__)) spl_command_type_t {
-//	trxvu_cmd_type,
-//	eps_cmd_type,
-//	telemetry_cmd_type, //2
-//	filesystem_cmd_type,
-//	managment_cmd_type,
-//	ack_type,// 5
-//	dump_type
-//}spl_command_type;
-
-
-
 int ActUponCommand(sat_packet_t *cmd){
 
 	if(!cmd)
 		return null_pointer_error;
-
+  int err = 0;
   switch(cmd->cmd_type){
 	case trxvu_cmd_type:
-		    trxvu_command_router(cmd);
+		    err = trxvu_command_router(cmd);
 		    break;
 	case eps_cmd_type:
-			eps_command_router(cmd);
+			err = eps_command_router(cmd);
 		 break;
 	case telemetry_cmd_type:
-		    telemetry_command_router(cmd);
+		    err = telemetry_command_router(cmd);
 		break;
 	case filesystem_cmd_type:
-		    filesystem_command_router(cmd);
+		    err = filesystem_command_router(cmd);
 		break;
 	case managment_cmd_type:
-		    managment_command_router(cmd);
+		    err = managment_command_router(cmd);
 		break;
-	default : return -1;
+	default : err =  -1;
 
 	}
-  return 0;
+  return err;
 
 
 }
 
 int AssembleCommand(unsigned char *data, unsigned short data_length, char type, char subtype,unsigned int id, sat_packet_t *cmd){
 
-	if(MAX_COMMAND_DATA_LENGTH < data_length)
+	if(data_length > MAX_COMMAND_DATA_LENGTH)
 		return execution_error;
 
 	cmd->ID = id;
