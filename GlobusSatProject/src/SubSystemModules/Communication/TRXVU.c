@@ -78,7 +78,7 @@ int TRX_Logic()	{
 		if(ActUponCommand(&cmd) == -1)
 			printf("Our error");
 
-
+		// .. Beacon logic
 	}
 
  return 0;

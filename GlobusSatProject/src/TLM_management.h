@@ -14,6 +14,14 @@
 #include <hal/Timing/Time.h>
 #include <time.h>
 #include "SubSystemModules/Communication/SatCommandHandler.h"
+#include <satellite-subsystems/IsisTRXUV.h>
+#include <satellite-subsystems/IsisAntS.h>
+#include <satellite-subsystems/imepsv2_piu.h>
+#include <hal/errors.h>
+#include <hcc/api_fat.h>
+#include "hcc/api_fs_err.h"
+
+
 
 
 #define MAX_FILE_NAME_SIZE 11
@@ -107,20 +115,19 @@ void DeInitializeFS(int sd_card);
  * @param size_of_element size of the structure.
  * DEFAULT_NUM_OF_FILES for default(recommended).
  * @return FS_TOO_LONG_NAME if c_file_name size is bigger then MAX_F_FILE_NAME_SIZE,
- * FS_FRAM_FAIL,
+ * or errno on api function fail,
  * FS_SUCCSESS on success.
  */
-FileSystemResult c_fileCreate(char* c_file_name,
-		int size_of_element);
+FileSystemResult c_fileCreate(char* c_file_name,F_FILE ** res);
 /*!
  * Write element to c_file.
  * @param c_file_name the name of the c_file.
  * @param element the structure of the telemetry/data.
  * @return FS_NOT_EXIST if c_file not exist,
  * FS_LOCKED if c_file used by other thread,
- * FS_SUCCSESS on success.
+ * FS_SUCCSESS on success.z
  */
-FileSystemResult c_fileWrite(void* element);
+FileSystemResult c_fileWrite(char* file_name,void* element,int element_size);
 
 /*!
  * Delete elements from c_file from "from_time" to "to_time".
@@ -157,6 +164,14 @@ int c_fileGetNumOfElements(char* c_file_name,time_unix from_time
 FileSystemResult c_fileRead(char* c_file_name, byte* buffer, int size_of_buffer,
 		time_unix from_time, time_unix to_time, int* read,time_unix* last_read_time);
 
+/*!
+ * returns the number of bytes from the beginning of the file to the time in the @param
+ * @param file the stream of the file.
+ * @param time the time to find
+ * @return the number of bytes from the start
+ * @return -1 if time doesnt exist in the stream
+ */
+int getTimePostion (F_FILE * file,time_unix time);
 char* getName();
 //print c_file for testing
 void print_file(char* c_file_name);
@@ -164,7 +179,3 @@ FileSystemResult c_fileReset(char* c_file_name);
 int FS_test();
 void test_i();
 #endif /* TM_MANAGMENT_H_ */
-
-
-
-
