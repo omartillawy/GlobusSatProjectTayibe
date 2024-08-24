@@ -5,8 +5,6 @@
  *      Author: 2022
  */
 #include <stdio.h>
-
-
 #include "CommandDictionary.h"
 #include "SubSystemModules/PowerManagment/EPS.h"
 #include "TLM_management.h"
@@ -91,10 +89,18 @@ int telemetry_command_router(sat_packet_t *cmd){
 }
 
 int filesystem_command_router(sat_packet_t *cmd){
-	switch(cmd->cmd_subtype){
+	F_FILE * file;
 
+	switch(cmd->cmd_subtype){
 	case 0 :
-		printf(" zero ");
+		c_fileCreate("taybe",&file);
+		fm_close(file);
+		break;
+	case 1:
+		//find first
+		break;
+	case 2:
+		//f_write;
 		break;
 
 
