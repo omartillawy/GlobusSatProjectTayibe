@@ -33,32 +33,15 @@ int ParseDataToCommand(unsigned char * data, sat_packet_t *cmd){
 }
 
 int ActUponCommand(sat_packet_t *cmd){
-
 	if(!cmd)
 		return null_pointer_error;
-  int err = 0;
-  switch(cmd->cmd_type){
-	case trxvu_cmd_type:
-		    err = trxvu_command_router(cmd);
-		    break;
-	case eps_cmd_type:
-			err = eps_command_router(cmd);
-		 break;
-	case telemetry_cmd_type:
-		    err = telemetry_command_router(cmd);
-		break;
-	case filesystem_cmd_type:
-		    err = filesystem_command_router(cmd);
-		break;
-	case managment_cmd_type:
-		    err = managment_command_router(cmd);
-		break;
-	default : err =  -1;
 
-	}
-  return err;
-
-
+  int (*f[])(sat_packet_t * cmd) = {trxvu_command_router,
+		  eps_command_router,telemetry_command_router,
+		  filesystem_command_router,managment_command_router};
+  if(cmd->cmd_type < 0 || cmd->cmd_type > 4)
+	  return -1;
+  return f[cmd->cmd_type];
 }
 
 int AssembleCommand(unsigned char *data, unsigned short data_length, char type, char subtype,unsigned int id, sat_packet_t *cmd){

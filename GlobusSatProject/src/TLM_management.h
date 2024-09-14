@@ -102,12 +102,12 @@ void delete_allTMFilesFromSD();
  * FS_ALLOCATION_ERROR on malloc error,
  * FS_SUCCSESS on success.
  */
-FileSystemResult InitializeFS();
+FileSystemResult InitializeFS();//
 
 /*!
  * DeInitializes the file system.
  */
-void DeInitializeFS(int sd_card);
+void DeInitializeFS(int sd_card);//
 
 /*!
  * Create new c_file.
@@ -118,7 +118,7 @@ void DeInitializeFS(int sd_card);
  * or errno on api function fail,
  * FS_SUCCSESS on success.
  */
-FileSystemResult c_fileCreate(char* c_file_name,F_FILE ** res);
+FileSystemResult c_fileCreate(char* c_file_name,F_FILE ** res);//
 /*!
  * Write element to c_file.
  * @param c_file_name the name of the c_file.
@@ -127,7 +127,7 @@ FileSystemResult c_fileCreate(char* c_file_name,F_FILE ** res);
  * FS_LOCKED if c_file used by other thread,
  * FS_SUCCSESS on success.z
  */
-FileSystemResult c_fileWrite(char* file_name,void* element,int element_size);
+FileSystemResult c_fileWrite(char* file_name,void* element,int element_size);//
 
 /*!
  * Delete elements from c_file from "from_time" to "to_time".

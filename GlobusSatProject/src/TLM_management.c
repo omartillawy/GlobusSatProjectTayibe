@@ -16,13 +16,11 @@
 #define SD_CARD_DRIVER_SEC 1
 
 FileSystemResult InitializeFS() {
-
 	int err = hcc_mem_init();
 	if (err != E_NO_SS_ERR) {
 		logError(err, "hcc_mem_init failed");
 		return err;
 	}
-
 	err = fn_init();
 	if (err != E_NO_SS_ERR) {
 		logError(err, "hcc_mem_init failed");
@@ -44,9 +42,7 @@ FileSystemResult InitializeFS() {
 		logError(err, "f_initvolume pb: %d\n\r");
 		return -1;
 	}
-
 	return FS_SUCCSESS;
-
 }
 
 void DeInitializeFS(int SD_Card) {
@@ -208,7 +204,6 @@ FileSystemResult c_fileDeleteElements(char* c_file_name, time_unix from_time,
 	while (fm_eof(file) == 0) {
 
 		fm_seek(file, Pos2, SEEK_SET);
-
 		fm_read(&temp_time, sizeof(time_unix), 1, file);
 		fm_read(&seek, 4, 1, file);
 		void *data = malloc(seek);
@@ -225,7 +220,6 @@ FileSystemResult c_fileDeleteElements(char* c_file_name, time_unix from_time,
 
 	fm_close(file);
 	return FS_SUCCSESS;
-
 }
 
 int getTimePostion(F_FILE * file, time_unix time) {
@@ -244,9 +238,7 @@ int getTimePostion(F_FILE * file, time_unix time) {
 		}
 
 	}
-
 	return -1;
-
 }
 
 

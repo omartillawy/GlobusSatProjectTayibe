@@ -84,4 +84,25 @@ int TRX_Logic()	{
  return 0;
 }
 
+int turnOnTransponder(){
+
+
+	unsigned char command[] = {56,2};
+	return I2C_write(0x61,command,2);
+}
+
+ int turnOffTransponder(){
+
+
+	unsigned char command[] = {56,1};
+	return I2C_write(0x61,command,2);
+}
+int CMD_SetTransponder(sat_packet_t *cmd){
+	 if(!cmd)
+		 return null_pointer_error;
+	 char c = *(char*)cmd->data;
+	 if(c == 1)
+		 return turnOffTransponder();
+	 return turnOnTransponder();
+}
 

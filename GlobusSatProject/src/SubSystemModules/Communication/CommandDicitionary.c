@@ -8,14 +8,15 @@
 #include "CommandDictionary.h"
 #include "SubSystemModules/PowerManagment/EPS.h"
 #include "TLM_management.h"
+#include "TRXVU.h";
 
 
 int trxvu_command_router(sat_packet_t *cmd){
 
 	switch(cmd->cmd_subtype){
 
-	case 0 :
-		printf(" zero ");
+	case SET_TRANSPONDER :
+		     CMD_SetTransponder(cmd);
 		break;
 
 
@@ -90,22 +91,24 @@ int telemetry_command_router(sat_packet_t *cmd){
 
 int filesystem_command_router(sat_packet_t *cmd){
 	F_FILE * file;
+		F_FIND f;
+		char * s = "ABCDE";
+		switch(cmd->cmd_subtype){
 
-	switch(cmd->cmd_subtype){
-	case 0 :
-		c_fileCreate("taybe",&file);
-		fm_close(file);
-		break;
-	case 1:
-		//find first
-		break;
-	case 2:
-		//f_write;
-		break;
+			case 0 :
+			    c_fileCreate("Example",&file);
+				fm_close(file);
+				break;
+			case 1:
+				c_fileWrite("Example" , s , sizeof(s));
+				break;
+			case 2:
+				printf("%d " ,f_findfirst("taybe",&f));
+				break;
 
 
-	}
-	return 0;
+			}
+	   return 0;
 }
 
 
