@@ -86,13 +86,11 @@ int TRX_Logic()	{
 
 int turnOnTransponder(){
 
-
 	unsigned char command[] = {56,2};
 	return I2C_write(0x61,command,2);
 }
 
  int turnOffTransponder(){
-
 
 	unsigned char command[] = {56,1};
 	return I2C_write(0x61,command,2);
@@ -104,5 +102,31 @@ int CMD_SetTransponder(sat_packet_t *cmd){
 	 if(c == 1)
 		 return turnOffTransponder();
 	 return turnOnTransponder();
+}
+
+int muteTRXVU(time_unix duration){
+	if(duration < 0)
+		return -1;
+	int err = FRAM_write((unsigned char * )duration ,  MUTE_END_TIME_ADDR, MUTE_END_TIME_SIZE);
+	if(err != 0)
+		return -1;
+	return 0;
+}
+void UnMuteTRXVU(){
+	time_unix t = 0;
+	muteTRXVU(t);
+}
+time_unix getTransponderEndTime(){
+
+	time_unix t;
+	int err = FRAM_write((unsigned char * )&t ,  MUTE_END_TIME_ADDR, MUTE_END_TIME_SIZE);
+	return t;
+
+}
+int SetTransponderEndTime(time_unix *t){
+	int err = FRAM_write((unsigned char * )t ,  MUTE_END_TIME_ADDR, MUTE_END_TIME_SIZE);
+		if(err != 0)
+			return -1;
+		return 0;
 }
 

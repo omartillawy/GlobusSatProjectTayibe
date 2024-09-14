@@ -39,7 +39,7 @@ int Init_Drivers(){
 	return !(StartI2C() *StartSPI() * StartTime());
 }
 int Init_Subsystems(){
-	return !(StartFRAM() * EPS_Init() * Init_TRXVU());
+	return !(StartFRAM() * EPS_Init() * Init_TRXVU() * InitializeFS);
 }
 
 int InitSystems(){

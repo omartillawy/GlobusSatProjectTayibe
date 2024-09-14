@@ -46,6 +46,8 @@ time_unix getMuteEndTime();
 
 
 time_unix getTransponderEndTime();
+int SetTransponderEndTime(time_unix t);
+
 
 /**
  * Sets transponder RSSI value in FRAM

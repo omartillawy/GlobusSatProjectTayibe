@@ -141,11 +141,49 @@ int GetAlpha(float *alpha){
 	if(NULL == alpha)
 			return E_INPUT_POINTER_NULL;
 		if(logError(
-				FRAM_read((unsigned char*)&alpha , EPS_ALPHA_FILTER_VALUE_ADDR , EPS_ALPHA_FILTER_VALUE_SIZE), "Error, reading from FRAM"))
+				FRAM_read((unsigned char*)alpha , EPS_ALPHA_FILTER_VALUE_ADDR , EPS_ALPHA_FILTER_VALUE_SIZE), "Error, reading from FRAM"))
 			return -1;
 		return 0;
 }
+int GetThresholdVoltages(EpsThreshVolt_t thresh_volts[NUMBER_OF_THRESHOLD_VOLTAGES]){
 
+	if(thresh_volts == NULL)
+		return -1;
+	if(FRAM_read((unsigned char *)thresh_volts,EPS_THRESH_VOLTAGES_ADDR,EPS_THRESH_VOLTAGES_SIZE) != 0)
+		return -2;
+
+return 0;
+
+}
+
+int UpdateThresholdVoltages(EpsThreshVolt_t *thresh_volts){
+
+	if(!thresh_volts)
+		return -2;
+	if(FRAM_write((unsigned char *)thresh_volts,EPS_THRESH_VOLTAGES_ADDR,EPS_THRESH_VOLTAGES_SIZE) != 0)
+		return -1;
+	return 0;
+}
+int RestoreDefaultAlpha(){
+	int err= logError(FRAM_write((unsigned char*)&DEFAULT_ALPHA_VALUE , EPS_ALPHA_FILTER_VALUE_ADDR , EPS_ALPHA_FILTER_VALUE_SIZE) , "Error writeing to FRAM" );
+	if(err != 0)
+		return -1;
+return 0;
+
+}
+
+int RestoreDefaultThresholdVoltages(){
+	EpsThreshVolt_t t;
+	t.fields.Vdown_cruise = 7100;
+	t.fields.Vup_cruise = 7200;
+	t.fields.Vdown_safe = 6500;
+	t.fields.Vup_safe = 6600;
+	t.fields.Vdown_full = 7300;
+	t.fields.Vup_full = 7400;
+
+	return UpdateThresholdVoltages(&t);
+
+}
 
 
 
